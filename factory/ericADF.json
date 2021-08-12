@@ -1,0 +1,9 @@
+{
+	"name": "ericADF",
+	"location": "uksouth",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "80697d00-6095-49c4-8407-1affa9134751",
+		"tenantId": "98d71f17-2d18-42ae-885b-bd3e2aba3a22"
+	}
+}
