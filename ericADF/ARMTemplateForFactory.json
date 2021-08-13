@@ -40,11 +40,11 @@
 							"storedProcedureParameters": {
 								"startDate": {
 									"value": "'1980-01-01'",
-									"type": "Datetime"
+									"type": "String"
 								},
 								"endDate": {
 									"value": "'2064-12-31'",
-									"type": "Datetime"
+									"type": "String"
 								}
 							}
 						},
