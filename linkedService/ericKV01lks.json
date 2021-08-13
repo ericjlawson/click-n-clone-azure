@@ -1,0 +1,10 @@
+{
+	"name": "ericKV01lks",
+	"properties": {
+		"annotations": [],
+		"type": "AzureKeyVault",
+		"typeProperties": {
+			"baseUrl": "https://ericKV01.vault.azure.net/"
+		}
+	}
+}
