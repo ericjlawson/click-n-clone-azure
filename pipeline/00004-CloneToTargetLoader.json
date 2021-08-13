@@ -1,0 +1,33 @@
+{
+	"name": "00004-CloneToTargetLoader",
+	"properties": {
+		"activities": [
+			{
+				"name": "CloneToTargetLoader_00001",
+				"type": "ExecuteSSISPackage",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"packageLocation": {
+						"packagePath": "clicknclone/DemoSsisPackages/CloneToTargetLoader_00001.dtsx",
+						"type": "SSISDB"
+					},
+					"environmentPath": null,
+					"connectVia": {
+						"referenceName": "ericIR01",
+						"type": "IntegrationRuntimeReference"
+					},
+					"loggingLevel": "Basic"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
