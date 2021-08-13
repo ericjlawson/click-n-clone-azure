@@ -6,32 +6,12 @@
 			"type": "string",
 			"metadata": "Data Factory name",
 			"defaultValue": "ericADF"
-		},
-		"DIM_Time_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'DIM_Time'"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_Time')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('DIM_Time_connectionString')]",
-					"alwaysEncryptedSettings": {
-						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
-					}
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/00001-date-and-time-dimension-load')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
@@ -99,9 +79,7 @@
 				],
 				"annotations": []
 			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/DIM_Time')]"
-			]
+			"dependsOn": []
 		}
 	]
 }
