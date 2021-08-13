@@ -19,6 +19,17 @@
 			"type": "string",
 			"defaultValue": "https://ericKV01.vault.azure.net/"
 		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"type": "string",
+			"defaultValue": "ericsrv01.database.windows.net"
+		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"type": "string",
+			"defaultValue": "ericadmin01"
+		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"type": "secureString"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -54,6 +65,15 @@
 					},
 					"ericKV01lks_properties_typeProperties_baseUrl": {
 						"value": "[parameters('ericKV01lks_properties_typeProperties_baseUrl')]"
+					},
+					"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+						"value": "[parameters('ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint')]"
+					},
+					"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+						"value": "[parameters('ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName')]"
+					},
+					"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+						"value": "[parameters('ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword')]"
 					}
 				}
 			},

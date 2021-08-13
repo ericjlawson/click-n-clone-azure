@@ -13,6 +13,15 @@
 		},
 		"ericKV01lks_properties_typeProperties_baseUrl": {
 			"value": "https://ericKV01.vault.azure.net/"
+		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogServerEndpoint": {
+			"value": "ericsrv01.database.windows.net"
+		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminUserName": {
+			"value": "ericadmin01"
+		},
+		"ericIR01_properties_typeProperties_ssisProperties_catalogInfo_catalogAdminPassword": {
+			"value": ""
 		}
 	}
 }
