@@ -121,7 +121,7 @@
 									"type": "DateTime"
 								},
 								"numOrders": {
-									"value": "1000",
+									"value": "",
 									"type": "Int32"
 								}
 							}
