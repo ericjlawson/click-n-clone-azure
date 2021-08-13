@@ -1,9 +1,9 @@
 {
-	"name": "00002-generate-store-orders-history",
+	"name": "00003-generate-store-orders-daily",
 	"properties": {
 		"activities": [
 			{
-				"name": "generate store orders history",
+				"name": "generate store orders",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [],
 				"policy": {
@@ -18,11 +18,11 @@
 					"storedProcedureName": "[dbo].[createStoreOrders]",
 					"storedProcedureParameters": {
 						"businessDate": {
-							"value": null,
+							"value": "2021-08-14",
 							"type": "DateTime"
 						},
 						"numOrders": {
-							"value": "125000",
+							"value": "13570",
 							"type": "Int32"
 						}
 					}
