@@ -14,6 +14,10 @@
 		"ProductionFeeds_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'ProductionFeeds'"
+		},
+		"ericKV01lks_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://ericKV01.vault.azure.net/"
 		}
 	},
 	"variables": {
@@ -117,7 +121,7 @@
 									"type": "DateTime"
 								},
 								"numOrders": {
-									"value": "1000000",
+									"value": "1000",
 									"type": "Int32"
 								}
 							}
@@ -143,12 +147,22 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('DIM_Time_connectionString')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ericKV01lks",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "admin01-user-pwd"
+					},
 					"alwaysEncryptedSettings": {
 						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
 					}
 				}
 			},
-			"dependsOn": []
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ericKV01lks')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ProductionFeeds')]",
@@ -159,6 +173,19 @@
 				"type": "AzureSqlDatabase",
 				"typeProperties": {
 					"connectionString": "[parameters('ProductionFeeds_connectionString')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ericKV01lks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('ericKV01lks_properties_typeProperties_baseUrl')]"
 				}
 			},
 			"dependsOn": []

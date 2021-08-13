@@ -11,6 +11,9 @@
 		"ProductionFeeds_connectionString": {
 			"value": ""
 		},
+		"ericKV01lks_properties_typeProperties_baseUrl": {
+			"value": "https://ericKV01.vault.azure.net/"
+		},
 		"containerUri": {
 			"value": ""
 		},

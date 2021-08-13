@@ -7,35 +7,23 @@
 			"metadata": "Data Factory name",
 			"defaultValue": "ericADF"
 		},
+		"ProductionFeeds_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ProductionFeeds'"
+		},
 		"DIM_Time_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DIM_Time'"
 		},
-		"ProductionFeeds_connectionString": {
-			"type": "secureString",
-			"metadata": "Secure string for 'connectionString' of 'ProductionFeeds'"
+		"ericKV01lks_properties_typeProperties_baseUrl": {
+			"type": "string",
+			"defaultValue": "https://ericKV01.vault.azure.net/"
 		}
 	},
 	"variables": {
 		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
 	},
 	"resources": [
-		{
-			"name": "[concat(parameters('factoryName'), '/DIM_Time')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "AzureSqlDatabase",
-				"typeProperties": {
-					"connectionString": "[parameters('DIM_Time_connectionString')]",
-					"alwaysEncryptedSettings": {
-						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
-					}
-				}
-			},
-			"dependsOn": []
-		},
 		{
 			"name": "[concat(parameters('factoryName'), '/ProductionFeeds')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
@@ -48,6 +36,88 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ericKV01lks')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureKeyVault",
+				"typeProperties": {
+					"baseUrl": "[parameters('ericKV01lks_properties_typeProperties_baseUrl')]"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/00002-generate-store-orders')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "generate store orders history",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[createStoreOrders]",
+							"storedProcedureParameters": {
+								"businessDate": {
+									"value": null,
+									"type": "DateTime"
+								},
+								"numOrders": {
+									"value": "1000",
+									"type": "Int32"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ProductionFeeds",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ProductionFeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/DIM_Time')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('DIM_Time_connectionString')]",
+					"password": {
+						"type": "AzureKeyVaultSecret",
+						"store": {
+							"referenceName": "ericKV01lks",
+							"type": "LinkedServiceReference"
+						},
+						"secretName": "admin01-user-pwd"
+					},
+					"alwaysEncryptedSettings": {
+						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ericKV01lks')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/00001-date-and-time-dimension-load')]",
@@ -118,49 +188,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/DIM_Time')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/00002-generate-store-orders')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "generate store orders history",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "7.00:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[createStoreOrders]",
-							"storedProcedureParameters": {
-								"businessDate": {
-									"value": null,
-									"type": "DateTime"
-								},
-								"numOrders": {
-									"value": "1000000",
-									"type": "Int32"
-								}
-							}
-						},
-						"linkedServiceName": {
-							"referenceName": "ProductionFeeds",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ProductionFeeds')]"
 			]
 		}
 	]
