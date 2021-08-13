@@ -45,11 +45,11 @@
 						"typeProperties": {
 							"storedProcedureName": "[[dbo].[generate_DIM_Date_rows]",
 							"storedProcedureParameters": {
-								"startDate": {
+								"inBeginDate": {
 									"value": "'1980-01-01'",
 									"type": "String"
 								},
-								"endDate": {
+								"inEndDate": {
 									"value": "'2064-12-31'",
 									"type": "String"
 								}
