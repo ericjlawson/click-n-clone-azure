@@ -1,0 +1,15 @@
+{
+	"name": "DIM_Time",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureSqlDatabase",
+		"typeProperties": {
+			"connectionString": "integrated security=False;encrypt=True;connection timeout=30;data source=ericsrv01.database.windows.net;initial catalog=RetailDW;user id=ericadmin01",
+			"alwaysEncryptedSettings": {
+				"alwaysEncryptedAkvAuthType": "ManagedIdentity"
+			},
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkVSSUNBREZfYmMwYjA5ZGMtMjM1NS00MWQ4LTlmNDEtNTM2NjQyM2ZmNTRlIg0KfQ=="
+		}
+	}
+}
