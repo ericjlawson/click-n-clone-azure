@@ -96,7 +96,7 @@
 			]
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/00002-generate-store-orders')]",
+			"name": "[concat(parameters('factoryName'), '/00002-generate-store-orders-history')]",
 			"type": "Microsoft.DataFactory/factories/pipelines",
 			"apiVersion": "2018-06-01",
 			"properties": {
@@ -122,6 +122,49 @@
 								},
 								"numOrders": {
 									"value": "125000",
+									"type": "Int32"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ProductionFeeds",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ProductionFeeds')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/00003-generate-store-orders-daily')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "generate store orders",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[createStoreOrders]",
+							"storedProcedureParameters": {
+								"businessDate": {
+									"value": "2021-08-14",
+									"type": "DateTime"
+								},
+								"numOrders": {
+									"value": "13570",
 									"type": "Int32"
 								}
 							}
