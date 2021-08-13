@@ -10,6 +10,10 @@
 		"DIM_Time_connectionString": {
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DIM_Time'"
+		},
+		"ProductionFeeds_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ProductionFeeds'"
 		}
 	},
 	"variables": {
@@ -88,6 +92,49 @@
 			]
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/00002-generate-store-orders')]",
+			"type": "Microsoft.DataFactory/factories/pipelines",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"activities": [
+					{
+						"name": "generate store orders history",
+						"type": "SqlServerStoredProcedure",
+						"dependsOn": [],
+						"policy": {
+							"timeout": "7.00:00:00",
+							"retry": 0,
+							"retryIntervalInSeconds": 30,
+							"secureOutput": false,
+							"secureInput": false
+						},
+						"userProperties": [],
+						"typeProperties": {
+							"storedProcedureName": "[[dbo].[createStoreOrders]",
+							"storedProcedureParameters": {
+								"businessDate": {
+									"value": null,
+									"type": "DateTime"
+								},
+								"numOrders": {
+									"value": "1000000",
+									"type": "Int32"
+								}
+							}
+						},
+						"linkedServiceName": {
+							"referenceName": "ProductionFeeds",
+							"type": "LinkedServiceReference"
+						}
+					}
+				],
+				"annotations": []
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ProductionFeeds')]"
+			]
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/DIM_Time')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -99,6 +146,19 @@
 					"alwaysEncryptedSettings": {
 						"alwaysEncryptedAkvAuthType": "ManagedIdentity"
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/ProductionFeeds')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "AzureSqlDatabase",
+				"typeProperties": {
+					"connectionString": "[parameters('ProductionFeeds_connectionString')]"
 				}
 			},
 			"dependsOn": []

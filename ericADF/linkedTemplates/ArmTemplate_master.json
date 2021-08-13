@@ -11,6 +11,10 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'connectionString' of 'DIM_Time'"
 		},
+		"ProductionFeeds_connectionString": {
+			"type": "secureString",
+			"metadata": "Secure string for 'connectionString' of 'ProductionFeeds'"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -40,6 +44,9 @@
 					},
 					"DIM_Time_connectionString": {
 						"value": "[parameters('DIM_Time_connectionString')]"
+					},
+					"ProductionFeeds_connectionString": {
+						"value": "[parameters('ProductionFeeds_connectionString')]"
 					}
 				}
 			},

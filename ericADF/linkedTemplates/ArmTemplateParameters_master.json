@@ -8,6 +8,9 @@
 		"DIM_Time_connectionString": {
 			"value": ""
 		},
+		"ProductionFeeds_connectionString": {
+			"value": ""
+		},
 		"containerUri": {
 			"value": ""
 		},
