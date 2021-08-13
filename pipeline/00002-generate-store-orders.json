@@ -1,0 +1,38 @@
+{
+	"name": "00002-generate-store-orders",
+	"properties": {
+		"activities": [
+			{
+				"name": "generate store orders history",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[createStoreOrders]",
+					"storedProcedureParameters": {
+						"businessDate": {
+							"value": null,
+							"type": "DateTime"
+						},
+						"numOrders": {
+							"value": "1000000",
+							"type": "Int32"
+						}
+					}
+				},
+				"linkedServiceName": {
+					"referenceName": "ProductionFeeds",
+					"type": "LinkedServiceReference"
+				}
+			}
+		],
+		"annotations": []
+	}
+}
