@@ -4,6 +4,26 @@
 		"description": "00001-date-and-time-dimension-load",
 		"activities": [
 			{
+				"name": "Populate DIM_Time",
+				"type": "SqlServerStoredProcedure",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "7.00:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"storedProcedureName": "[dbo].[generate_DIM_Time_rows]"
+				},
+				"linkedServiceName": {
+					"referenceName": "DIM_Time",
+					"type": "LinkedServiceReference"
+				}
+			},
+			{
 				"name": "Populate DIM_Date",
 				"type": "SqlServerStoredProcedure",
 				"dependsOn": [
@@ -26,34 +46,14 @@
 					"storedProcedureName": "[dbo].[generate_DIM_Date_rows]",
 					"storedProcedureParameters": {
 						"inBeginDate": {
-							"value": "'1980-01-01'",
-							"type": "Datetime"
+							"value": "1980-01-01",
+							"type": "DateTime"
 						},
 						"inEndDate": {
-							"value": "'2064-12-31'",
-							"type": "Datetime"
+							"value": "2064-12-31",
+							"type": "DateTime"
 						}
 					}
-				},
-				"linkedServiceName": {
-					"referenceName": "DIM_Time",
-					"type": "LinkedServiceReference"
-				}
-			},
-			{
-				"name": "Populate DIM_Time",
-				"type": "SqlServerStoredProcedure",
-				"dependsOn": [],
-				"policy": {
-					"timeout": "7.00:00:00",
-					"retry": 0,
-					"retryIntervalInSeconds": 30,
-					"secureOutput": false,
-					"secureInput": false
-				},
-				"userProperties": [],
-				"typeProperties": {
-					"storedProcedureName": "[dbo].[generate_DIM_Time_rows]"
 				},
 				"linkedServiceName": {
 					"referenceName": "DIM_Time",
