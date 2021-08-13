@@ -47,11 +47,11 @@
 							"storedProcedureParameters": {
 								"inBeginDate": {
 									"value": "'1980-01-01'",
-									"type": "String"
+									"type": "Datetime"
 								},
 								"inEndDate": {
 									"value": "'2064-12-31'",
-									"type": "String"
+									"type": "Datetime"
 								}
 							}
 						},
